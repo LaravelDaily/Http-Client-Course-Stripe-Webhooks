@@ -20,7 +20,6 @@ class PaymentController extends Controller
 
         try {
             $clientSecret = $this->paymentService->createPaymentIntent(5000, 'usd', $orderId);
-            // $clientSecret = $this->paymentService->createPaymentIntentWithPackage(5000, 'usd', $orderId);
             
             $paymentData = [
                 'client_secret' => $clientSecret,

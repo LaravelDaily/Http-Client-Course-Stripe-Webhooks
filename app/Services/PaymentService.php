@@ -21,32 +21,6 @@ class PaymentService
     
     public function createPaymentIntent($amount, $currency = 'usd', $orderId = null): string
     {
-        $headers = [
-            'Authorization' => 'Bearer ' . $this->secretKey,
-        ];
-        
-        $response = Http::withHeaders($headers)
-            ->post('https://api.stripe.com/v1/payment_intents', [
-                'amount' => $amount, 
-                'currency' => $currency,
-                'automatic_payment_methods' => [
-                    'enabled' => true,
-                ],
-                'metadata' => [
-                    'order_id' => $orderId ?? uniqid('waterpark_'),
-                    'product' => 'Water Park Ticket',
-                ],
-            ]);
-        
-        if ($response->successful()) {
-            return $response->json()['client_secret'];
-        }
-            
-        $this->handleApiError($response);            
-    }
-    
-    public function createPaymentIntentWithPackage($amount, $currency = 'usd', $orderId = null): string
-    {
         try {
             $params = [
                 'amount' => $amount, // Amount in cents
